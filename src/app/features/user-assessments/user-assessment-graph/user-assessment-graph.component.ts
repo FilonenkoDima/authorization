@@ -4,6 +4,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType } from 'chart.js';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-assessment-graph',
@@ -15,6 +16,8 @@ import { ChartType } from 'chart.js';
   styleUrl: './user-assessment-graph.component.css'
 })
 export class UserAssessmentGraphComponent implements OnInit {
+  private route: ActivatedRoute = inject(ActivatedRoute);
+
   graphData!: UserAssessmentGraphModel;
   chartData: any;
   chartType!: ChartType;
@@ -27,10 +30,8 @@ export class UserAssessmentGraphComponent implements OnInit {
     }
   };
 
-  private route: ActivatedRoute = inject(ActivatedRoute);
-
   ngOnInit(): void {
-    this.route.data.subscribe((data: any) => {
+    this.route.data.pipe(takeUntilDestroyed()).subscribe((data: any) => {
       this.graphData = data.graph.data;
       this.chartType = data.graph.type;
 

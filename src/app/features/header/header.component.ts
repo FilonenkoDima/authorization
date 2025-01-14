@@ -19,8 +19,6 @@ export class HeaderComponent {
   isLoggedIn$: Observable<boolean> = this.authService.loggedIn$;
   isAdmin$: Observable<boolean> = this.authService.role$.pipe(
     map((role: RoleType) => {
-      console.log('role - ' + role);
-      console.log('RoleType - ' + RoleType.ADMIN)
       return role === RoleType.ADMIN
     })
   );

@@ -45,11 +45,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class UsersComponent {
   private httpService: HttpService = inject(HttpService);
 
-  displayedColumns: string[] = [];
-  dataSource!: MatTableDataSource<UserDataModel>;
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  displayedColumns!: string[];
+  dataSource!: MatTableDataSource<UserDataModel>;
 
   constructor() {
     this.httpService.getUsers$().pipe(
@@ -62,6 +62,7 @@ export class UsersComponent {
       })).subscribe();
   }
 
+  /** paginator method API */
   applyFilter(event: Event) {
     const filterValue: string = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

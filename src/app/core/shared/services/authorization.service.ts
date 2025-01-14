@@ -18,6 +18,7 @@ export class AuthorizationService {
   loggedIn$: Observable<boolean> = this.loggedInSubject$.asObservable();
   role$: Observable<RoleType> = this.roleSubject$.asObservable();
 
+  /** @return return true if success auth */
   login$(userDetails: { email: string; password: string }): Observable<boolean> {
     return this.http.post<any>(`${API_URL}login`, userDetails)
       .pipe(

@@ -27,7 +27,6 @@ export class HttpService {
     return this.http.get<any>(`${API_URL}userassessments`)
       .pipe(
         map(response => {
-          console.log(response);
           return response;
         }),
         catchError(error => {
@@ -42,7 +41,6 @@ export class HttpService {
     return this.http.get<any>(`${API_URL}userassessments/graph?id=${userAssessmentId}`)
       .pipe(
         map(response => {
-          console.log(response);
           return response;
         }),
         catchError(error => {
