@@ -1,4 +1,3 @@
-import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
 import { AuthorizationComponent } from './features/authorization/authorization.component';
 import { UsersComponent } from './features/users/users.component';
@@ -10,6 +9,8 @@ import {
   UserAssessmentGraphComponent
 } from './features/user-assessments/user-assessment-graph/user-assessment-graph.component';
 
+import { Routes } from '@angular/router';
+
 export const routes: Routes = [
   {
     path: '',
@@ -19,8 +20,10 @@ export const routes: Routes = [
       canActivate: [AdminGuardService, AuthGuardService]
     }, {
       path: 'user-assessments', component: UserAssessmentsComponent, canActivate: [AuthGuardService]
-    },{
-      path: 'user-assessments/graph', component: UserAssessmentGraphComponent, resolve: { graph: resolveUserAssessmentGraph }
+    }, {
+      path: 'user-assessments/graph',
+      component: UserAssessmentGraphComponent,
+      resolve: { graph: resolveUserAssessmentGraph }
     }]
   },
   { path: '**', component: PageNotFoundComponent },

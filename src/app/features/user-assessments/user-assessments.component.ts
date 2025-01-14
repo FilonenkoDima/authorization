@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+import { AuthorizationService } from '../../core/shared/services/authorization.service';
+import { RoleType } from '../../core/shared/enums/role.enum';
 
 @Component({
   selector: 'app-user-assessments',
@@ -24,6 +26,9 @@ export class UserAssessmentsComponent {
   private userAssessments$: Observable<UserAssessmentModel[]> = this.httpService.getUserAssessments$();
   private currentPageSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private currentPage$: Observable<number> = this.currentPageSubject.asObservable();
+  private authService = inject(AuthorizationService);
+
+  isAdmin$ = this.authService.role$.pipe(map(role => role === RoleType.ADMIN));
 
   totalAssessments: number = 0;
   pageSize: number = 4;

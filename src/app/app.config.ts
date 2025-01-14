@@ -5,6 +5,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +13,7 @@ export const appConfig: ApplicationConfig = {
       withRouterConfig({
         paramsInheritanceStrategy: 'always',
       }),), provideHttpClient(withInterceptors([jwtInterceptor])),
-    provideAnimationsAsync(),
+    provideAnimationsAsync(), provideCharts(withDefaultRegisterables()),
+    provideCharts(withDefaultRegisterables())
   ],
-
 };

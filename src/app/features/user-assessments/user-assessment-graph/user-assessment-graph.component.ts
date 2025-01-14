@@ -1,63 +1,59 @@
-import { Component } from '@angular/core';
+import { UserAssessmentGraphModel } from '../../../core/shared/models/user-assessment-graph.model';
+
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { JsonPipe } from '@angular/common';
-import { Chart } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-user-assessment-graph',
   imports: [
-    JsonPipe,
-    RouterLink
+    RouterLink,
+    BaseChartDirective
   ],
   templateUrl: './user-assessment-graph.component.html',
   styleUrl: './user-assessment-graph.component.css'
 })
-export class UserAssessmentGraphComponent  {
-  graphData: any;
-  chart: any;
-
-
-  constructor(private route: ActivatedRoute) {
-    // Отримання даних з Resolver через ActivatedRoute
-    this.route.data.subscribe((data: any) => {
-      this.graphData = data['graph']; // 'graph' відповідає ключу, вказаному в routes
-
-      // Перевірка наявності даних
-      // if (this.graphData && this.graphData.data) {
-        this.initializeChart();
-        // console.log('init')
-      // }
-    });
-  }
-
-  initializeChart() {
-    this.chart = new Chart("MyChart", {
-      type: 'bar', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-          '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ],
-        datasets: [
-          {
-            label: "Sales",
-            data: ['467','576', '572', '79', '92',
-              '574', '573', '576'],
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-              '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }
-        ]
-      },
-      options: {
-        aspectRatio:2.5
+export class UserAssessmentGraphComponent implements OnInit {
+  graphData!: UserAssessmentGraphModel;
+  chartData: any;
+  chartType!: ChartType;
+  chartOptions = {
+    responsive: true,
+    scales: {
+      x: {
+        beginAtZero: true
       }
+    }
+  };
 
+  private route: ActivatedRoute = inject(ActivatedRoute);
+
+  ngOnInit(): void {
+    this.route.data.subscribe((data: any) => {
+      this.graphData = data.graph.data;
+      this.chartType = data.graph.type;
+
+      if (this.graphData) {
+        this.initChart();
+      }
     });
   }
 
+  private initChart() {
+    const labels: string[] = Object.keys(this.graphData);
+    const values = Object.values(this.graphData);
+    console.log(labels, values);
 
+    this.chartData = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Assessment Data',
+          data: values,
+        }
+      ]
+    };
+  }
 }
+

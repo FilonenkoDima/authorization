@@ -23,11 +23,13 @@
     </div>
   }
 
-  <mat-paginator
-    [length]="totalAssessments"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[4, 8, 16, 32]"
-    aria-label="Select page of users"
-    (page)="onPageChange($event)">
-  </mat-paginator>
+  @if (isAdmin$ | async) {
+    <mat-paginator
+      [length]="totalAssessments"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[4, 8, 16, 32]"
+      aria-label="Select page of users"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  }
 </div>
