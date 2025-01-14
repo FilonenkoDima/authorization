@@ -1,8 +1,8 @@
-import { API_URL } from '../../../environment/urls.environment';
-
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
+
+import { API_URL } from '../../../environment/urls.environment';
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,10 @@
-import { UserAssessmentGraphModel } from '../../../core/shared/models/user-assessment-graph.model';
-
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType } from 'chart.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { UserAssessmentGraphModel } from '../../../core/shared/models/user-assessment-graph.model';
 
 @Component({
   selector: 'app-user-assessment-graph',
@@ -13,7 +13,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     BaseChartDirective
   ],
   templateUrl: './user-assessment-graph.component.html',
-  styleUrl: './user-assessment-graph.component.css'
 })
 export class UserAssessmentGraphComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);

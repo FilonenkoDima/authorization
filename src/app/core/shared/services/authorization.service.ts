@@ -1,10 +1,10 @@
-import { API_URL } from '../../../environment/urls.environment';
-import { RoleType } from '../enums/role.enum';
-
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+
+import { API_URL } from '../../../environment/urls.environment';
+import { RoleType } from '../enums/role.enum';
 
 @Injectable({
   providedIn: 'root'

@@ -1,14 +1,14 @@
-import { HttpService } from '../../core/shared/services/http.service';
-import { UserAssessmentModel } from '../../core/shared/models/user-assessment.model';
-import { RoleType } from '../../core/shared/enums/role.enum';
-import { AuthorizationService } from '../../core/shared/services/authorization.service';
-
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+
+import { HttpService } from '../../core/shared/services/http.service';
+import { UserAssessmentModel } from '../../core/shared/models/user-assessment.model';
+import { RoleType } from '../../core/shared/enums/role.enum';
+import { AuthorizationService } from '../../core/shared/services/authorization.service';
 
 @Component({
   selector: 'app-user-assessments',
@@ -19,7 +19,6 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
     MatPaginator
   ],
   templateUrl: './user-assessments.component.html',
-  styleUrl: './user-assessments.component.css'
 })
 export class UserAssessmentsComponent {
   private httpService: HttpService = inject(HttpService);

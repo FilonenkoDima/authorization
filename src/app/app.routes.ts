@@ -1,3 +1,5 @@
+import { Routes } from '@angular/router';
+
 import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
 import { AuthorizationComponent } from './features/authorization/authorization.component';
 import { UsersComponent } from './features/users/users.component';
@@ -8,8 +10,6 @@ import { resolveUserAssessmentGraph } from './core/shared/resolvers/user-assessm
 import {
   UserAssessmentGraphComponent
 } from './features/user-assessments/user-assessment-graph/user-assessment-graph.component';
-
-import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {

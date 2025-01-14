@@ -1,6 +1,3 @@
-import { UserDataModel } from '../../core/shared/models/user-data.model';
-import { HttpService } from '../../core/shared/services/http.service';
-
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
@@ -19,6 +16,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { UserDataModel } from '../../core/shared/models/user-data.model';
+import { HttpService } from '../../core/shared/services/http.service';
 
 @Component({
   selector: 'app-users',
@@ -40,7 +40,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatSortModule,
   ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
 })
 export class UsersComponent {
   private httpService: HttpService = inject(HttpService);

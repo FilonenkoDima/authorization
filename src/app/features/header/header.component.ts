@@ -1,9 +1,9 @@
-import { AuthorizationService } from '../../core/shared/services/authorization.service';
-import { RoleType } from '../../core/shared/enums/role.enum';
-
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { map, Observable } from 'rxjs';
+
+import { AuthorizationService } from '../../core/shared/services/authorization.service';
+import { RoleType } from '../../core/shared/enums/role.enum';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,6 @@ import { map, Observable } from 'rxjs';
     AsyncPipe
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   private authService:AuthorizationService = inject(AuthorizationService);
