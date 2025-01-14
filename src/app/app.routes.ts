@@ -10,22 +10,23 @@ import { resolveUserAssessmentGraph } from './core/shared/resolvers/user-assessm
 import {
   UserAssessmentGraphComponent
 } from './features/user-assessments/user-assessment-graph/user-assessment-graph.component';
+import { PATHS_ROUTES } from './core/shared/enums/paths.enum';
 
 export const routes: Routes = [
   {
     path: '',
-    children: [{ path: 'login', component: AuthorizationComponent }, {
-      path: 'users',
+    children: [{ path: PATHS_ROUTES.LOGIN, component: AuthorizationComponent }, {
+      path: PATHS_ROUTES.USERS,
       component: UsersComponent,
       canActivate: [AdminGuardService, AuthGuardService]
     }, {
-      path: 'user-assessments', component: UserAssessmentsComponent, canActivate: [AuthGuardService]
+      path: PATHS_ROUTES.USER_ASSESSMENTS, component: UserAssessmentsComponent, canActivate: [AuthGuardService]
     }, {
-      path: 'user-assessments/graph',
+      path: `${PATHS_ROUTES.USER_ASSESSMENTS}/${PATHS_ROUTES.GRAPH}`,
       component: UserAssessmentGraphComponent,
       resolve: { graph: resolveUserAssessmentGraph }
     }]
   },
-  { path: '**', component: PageNotFoundComponent },
+  { path: PATHS_ROUTES.INVALID_PATH, component: PageNotFoundComponent },
 ];
 
