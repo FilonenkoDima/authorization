@@ -1,0 +1,73 @@
+import { UserDataModel } from '../../core/shared/models/user-data.model';
+import { HttpService } from '../../core/shared/services/http.service';
+
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import {
+  MatCell,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderRow,
+  MatNoDataRow,
+  MatRow,
+  MatTable,
+  MatTableDataSource,
+  MatTableModule
+} from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Component({
+  selector: 'app-users',
+  imports: [
+    MatFormField,
+    MatInput,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderRow,
+    MatRow,
+    MatNoDataRow,
+    MatSort,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+  ],
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.css'
+})
+export class UsersComponent {
+  private httpService: HttpService = inject(HttpService);
+
+  displayedColumns: string[] = [];
+  dataSource!: MatTableDataSource<UserDataModel>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor() {
+    this.httpService.getUsers$().pipe(
+      takeUntilDestroyed(),
+      tap((data: UserDataModel[]) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.displayedColumns = Object.keys(data[0]) as (keyof UserDataModel)[];
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      })).subscribe();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue: string = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+}

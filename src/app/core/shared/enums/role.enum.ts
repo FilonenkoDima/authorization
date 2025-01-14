@@ -1,0 +1,1 @@
+export enum RoleType {'UNAUTHORIZED'='UNAUTHORIZED', USER='USER', ADMIN='ADMIN' }

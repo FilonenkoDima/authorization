@@ -1,0 +1,13 @@
+<button class="btn btn-outline-primary mb-5" [routerLink]="['../']">Back</button>
+@if (graphData) {
+  <div>
+    <h3>Graph Data</h3>
+    <div class="chart-container">
+      <canvas  id="MyChart" >{{ chart }}</canvas>
+    </div>
+
+    <pre>{{ graphData | json }}</pre>
+  </div>
+} @else {
+  <p>No data!</p>
+}

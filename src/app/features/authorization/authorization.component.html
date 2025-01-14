@@ -1,0 +1,25 @@
+@if (!(isLoggedIn$ | async)) {
+  <form [formGroup]="form" class="row g-3">
+    <mat-form-field class="col-md-6">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Ex. pat@example.com" type="email"/>
+      <mat-error>Please enter a valid email address.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" placeholder="********" type="password"/>
+      <mat-error>Please enter a valid password.</mat-error>
+    </mat-form-field>
+
+    <div>
+      <button (click)="onLogin()" class="btn btn-primary w-25">Sign in</button>
+    </div>
+  </form>
+} @else {
+  <h2>You are already logged in!</h2>
+
+  <div>
+    <button (click)="onLogout()" class="btn btn-primary w-25">Log out</button>
+  </div>
+}
