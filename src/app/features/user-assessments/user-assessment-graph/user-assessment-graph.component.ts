@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType } from 'chart.js';
@@ -14,7 +14,7 @@ import { UserAssessmentGraphModel } from '../../../core/shared/models/user-asses
   ],
   templateUrl: './user-assessment-graph.component.html',
 })
-export class UserAssessmentGraphComponent implements OnInit {
+export class UserAssessmentGraphComponent {
   private route: ActivatedRoute = inject(ActivatedRoute);
 
   graphData!: UserAssessmentGraphModel;
@@ -29,7 +29,7 @@ export class UserAssessmentGraphComponent implements OnInit {
     }
   };
 
-  ngOnInit(): void {
+  constructor() {
     this.route.data.pipe(takeUntilDestroyed()).subscribe((data: any) => {
       this.graphData = data.graph.data;
       this.chartType = data.graph.type;
