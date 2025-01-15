@@ -1,10 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartType } from 'chart.js';
+import { ChartData, ChartType } from 'chart.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UserAssessmentGraphModel } from '../../../core/shared/models/user-assessment-graph.model';
+import {
+  UserAssessmentGraphDataModel,
+  UserAssessmentGraphModel
+} from '../../../core/shared/models/user-assessment-graph-data.model';
 
 @Component({
   selector: 'app-user-assessment-graph',
@@ -17,8 +20,8 @@ import { UserAssessmentGraphModel } from '../../../core/shared/models/user-asses
 export class UserAssessmentGraphComponent {
   private route: ActivatedRoute = inject(ActivatedRoute);
 
-  graphData!: UserAssessmentGraphModel;
-  chartData: any;
+  graphData!: UserAssessmentGraphDataModel;
+  chartData!: ChartData;
   chartType!: ChartType;
   chartOptions = {
     responsive: true,
@@ -30,9 +33,10 @@ export class UserAssessmentGraphComponent {
   };
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed()).subscribe((data: any) => {
-      this.graphData = data.graph.data;
-      this.chartType = data.graph.type;
+    this.route.data.pipe(takeUntilDestroyed()).subscribe((data) => {
+      const resolvedData = data as { graph: UserAssessmentGraphModel };
+      this.graphData = resolvedData.graph.data;
+      this.chartType = resolvedData.graph.type as ChartType;
 
       if (this.graphData) {
         this.initChart();
@@ -51,7 +55,8 @@ export class UserAssessmentGraphComponent {
         {
           label: 'Assessment Data',
           data: values,
-        }
+        },
+
       ]
     };
   }

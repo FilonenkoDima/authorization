@@ -1,10 +1,10 @@
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
 
-import { UserAssessmentModel } from '../models/user-assessment.model';
 import { HttpService } from '../services/http.service';
+import { UserAssessmentGraphModel } from '../models/user-assessment-graph-data.model';
 
-export const resolveUserAssessmentGraph: ResolveFn<UserAssessmentModel> = (
+export const resolveUserAssessmentGraph: ResolveFn<UserAssessmentGraphModel> = (
   activatedRoute: ActivatedRouteSnapshot,
   routerState: RouterStateSnapshot
 ) => {

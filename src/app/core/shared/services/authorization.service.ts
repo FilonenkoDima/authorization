@@ -5,6 +5,8 @@ import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 
 import { API_URL } from '../../../environment/urls.environment';
 import { RoleType } from '../enums/role.enum';
+import { LoginModel } from '../models/login.model';
+import { LoginResponseModel } from '../models/login-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +21,14 @@ export class AuthorizationService {
   role$: Observable<RoleType> = this.roleSubject$.asObservable();
 
   /** @return return true if success auth */
-  login$(userDetails: { email: string; password: string }): Observable<boolean> {
-    return this.http.post<any>(`${API_URL}login`, userDetails)
+  login$(userDetails: LoginModel): Observable<boolean> {
+    return this.http.post<LoginResponseModel>(`${API_URL}login`, userDetails)
       .pipe(
         map(response => {
+          console.log(response);
           this.cookieService.set('JWT_Token', response.token, { expires: 2 });
           this.cookieService.set('ROLE', response.role.toUpperCase());
-          this.roleSubject$.next(response.role.toUpperCase());
+          this.roleSubject$.next(response.role.toUpperCase() as RoleType);
           this.loggedInSubject$.next(true);
           return true;
         }),
