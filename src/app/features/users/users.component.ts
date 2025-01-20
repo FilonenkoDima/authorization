@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, effect, inject, ViewChild } from '@angular/core';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import {
@@ -14,11 +14,10 @@ import {
 } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { UserDataModel } from '../../core/shared/models/user-data.model';
-import { HttpService } from '../../core/shared/services/http.service';
+import { UserStore } from '../../core/store/user.store';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-users',
@@ -38,11 +37,12 @@ import { HttpService } from '../../core/shared/services/http.service';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatProgressSpinner,
   ],
   templateUrl: './users.component.html',
 })
-export class UsersComponent {
-  private httpService: HttpService = inject(HttpService);
+export class UsersComponent  {
+  usersStore = inject(UserStore);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -51,14 +51,21 @@ export class UsersComponent {
   dataSource!: MatTableDataSource<UserDataModel>;
 
   constructor() {
-    this.httpService.getUsers$().pipe(
-      takeUntilDestroyed(),
-      tap((data: UserDataModel[]) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.displayedColumns = Object.keys(data[0]) as (keyof UserDataModel)[];
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      })).subscribe();
+    console.log(this.usersStore.users());
+    effect(() => {
+      this.dataSource = new MatTableDataSource(this.usersStore.users());
+      this.displayedColumns = Object.keys(this.usersStore.users()[0]) as (keyof UserDataModel)[];
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+    // this.httpService.getUsers$().pipe(
+    //   takeUntilDestroyed(),
+    //   tap((data: UserDataModel[]) => {
+    //     this.dataSource = new MatTableDataSource(data);
+    //     this.displayedColumns = Object.keys(data[0]) as (keyof UserDataModel)[];
+    //     this.dataSource.paginator = this.paginator;
+    //     this.dataSource.sort = this.sort;
+    //   })).subscribe();
   }
 
   /** paginator method API */
