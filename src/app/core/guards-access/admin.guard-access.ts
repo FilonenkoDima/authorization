@@ -3,8 +3,8 @@ import { CanActivateFn, Router } from "@angular/router";
 import { map, tap } from "rxjs/operators";
 import { Observable } from "rxjs";
 
-import { AuthorizationService } from "../shared/services/authorization.service";
-import { RoleType } from '../shared/enums/role.enum';
+import { AuthorizationService } from "../services/authorization.service";
+import { RoleType } from '../../shared/enums/role.enum';
 
 export const AdminGuardService: CanActivateFn = (): Observable<boolean> => {
   const authorizationService: AuthorizationService = inject(AuthorizationService);

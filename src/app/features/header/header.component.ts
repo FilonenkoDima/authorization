@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { map, Observable } from 'rxjs';
 
-import { AuthorizationService } from '../../core/shared/services/authorization.service';
-import { RoleType } from '../../core/shared/enums/role.enum';
+import { AuthorizationService } from '../../core/services/authorization.service';
+import { RoleType } from '../../shared/enums/role.enum';
 
 @Component({
   selector: 'app-header',

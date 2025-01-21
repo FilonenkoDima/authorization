@@ -4,11 +4,13 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import { HttpService } from '../../core/shared/services/http.service';
-import { UserAssessmentModel } from '../../core/shared/models/user-assessment.model';
-import { RoleType } from '../../core/shared/enums/role.enum';
-import { AuthorizationService } from '../../core/shared/services/authorization.service';
+import { UserAssessmentModel } from '../../shared/models/user-assessment.model';
+import { RoleType } from '../../shared/enums/role.enum';
+import { AuthorizationService } from '../../core/services/authorization.service';
+import { UsersAssessmentStore } from '../../core/store/data-store.factory';
 
 @Component({
   selector: 'app-user-assessments',
@@ -16,20 +18,21 @@ import { AuthorizationService } from '../../core/shared/services/authorization.s
     AsyncPipe,
     MatCardModule,
     RouterLink,
-    MatPaginator
+    MatPaginator,
+    MatProgressSpinner
   ],
   templateUrl: './user-assessments.component.html',
 })
 export class UserAssessmentsComponent {
-  private httpService: HttpService = inject(HttpService);
   private authService = inject(AuthorizationService);
 
   isAdmin$: Observable<boolean> = this.authService.role$.pipe(map(role => role === RoleType.ADMIN));
 
   totalAssessments: number = 0;
   pageSize: number = 4;
+  userAssessments = new UsersAssessmentStore();
 
-  private userAssessments$: Observable<UserAssessmentModel[]> = this.httpService.getUserAssessments$();
+  private userAssessments$ = toObservable(this.userAssessments.data);
   private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private currentPage$: Observable<number> = this.currentPageSubject$.asObservable();
 

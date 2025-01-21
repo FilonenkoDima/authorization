@@ -5,7 +5,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { AsyncPipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 
-import { AuthorizationService } from '../../core/shared/services/authorization.service';
+import { AuthorizationService } from '../../core/services/authorization.service';
 
 @Component({
   selector: 'app-authorization',
