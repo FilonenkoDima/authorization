@@ -1,19 +1,18 @@
 import { Component, inject, OnDestroy } from '@angular/core';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
-
-import { AuthorizationService } from '../../core/services/authorization.service';
 import { MatIcon } from '@angular/material/icon';
 import { MatCard } from '@angular/material/card';
+
+import { AuthorizationService } from '../../core/services/authorization.service';
 
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
   imports: [
-    MatFormField,
     MatInputModule,
     ReactiveFormsModule,
     MatFormFieldModule,
