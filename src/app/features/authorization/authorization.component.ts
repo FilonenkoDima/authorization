@@ -6,6 +6,7 @@ import { AsyncPipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 
 import { AuthorizationService } from '../../core/services/authorization.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-authorization',
@@ -17,6 +18,7 @@ import { AuthorizationService } from '../../core/services/authorization.service'
     MatFormFieldModule,
     FormsModule,
     AsyncPipe,
+    MatIcon,
   ],
 })
 export class AuthorizationComponent implements OnDestroy {
@@ -27,6 +29,7 @@ export class AuthorizationComponent implements OnDestroy {
 
   private loginSubscription$!: Subscription;
 
+  hide = true;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
