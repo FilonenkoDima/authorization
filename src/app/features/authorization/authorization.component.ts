@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { AuthorizationService } from '../../core/services/authorization.service';
 import { MatIcon } from '@angular/material/icon';
+import { MatCard } from '@angular/material/card';
 
 @Component({
   selector: 'app-authorization',
@@ -19,6 +20,7 @@ import { MatIcon } from '@angular/material/icon';
     FormsModule,
     AsyncPipe,
     MatIcon,
+    MatCard,
   ],
 })
 export class AuthorizationComponent implements OnDestroy {
