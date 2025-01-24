@@ -28,13 +28,18 @@ export const routes: Routes = [
     canActivate: [AdminGuardService, AuthGuardService]
   },
   {
-    path: PATHS_ROUTES.USER_ASSESSMENTS, component: UserAssessmentsViewComponent, canActivate: [AuthGuardService]
+    path: PATHS_ROUTES.USER_ASSESSMENTS,
+    component: UserAssessmentsViewComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: `${PATHS_ROUTES.USER_ASSESSMENTS}/${PATHS_ROUTES.GRAPH}`,
     component: UserAssessmentGraphViewComponent,
     canActivate: [AuthGuardService]
   },
-  { path: PATHS_ROUTES.INVALID_PATH, component: PageNotFoundComponent },
+  {
+    path: PATHS_ROUTES.INVALID_PATH,
+    component: PageNotFoundComponent
+  },
 ];
 
