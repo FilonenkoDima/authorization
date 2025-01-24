@@ -8,6 +8,8 @@ import {
   UserAssessmentGraphModel,
 } from '../../../../shared/models/user-assessment-graph-data.model';
 
+const legendsColor = ['rgba(255, 87, 51, 0.75)', 'rgb(51, 255, 87, 0.75)', 'rgb(51, 87, 255, 0.75)', 'rgb(255, 51, 168, 0.75)'];
+
 @Component({
   selector: 'app-user-assessment-graph',
   imports: [
@@ -27,6 +29,13 @@ export class UserAssessmentGraphComponent implements OnInit {
     scales: {
       x: {
         beginAtZero: true
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: 'rgba(0, 0, 0, 0.7)'
+        }
       }
     }
   };
@@ -51,9 +60,9 @@ export class UserAssessmentGraphComponent implements OnInit {
         {
           label: 'Assessment Data',
           data: values,
+          backgroundColor: legendsColor,
         },
       ]
     };
   }
 }
-
