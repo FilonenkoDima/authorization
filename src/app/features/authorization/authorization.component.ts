@@ -2,7 +2,6 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatCard } from '@angular/material/card';
@@ -17,7 +16,6 @@ import { AuthorizationService } from '../../core/services/authorization.service'
     ReactiveFormsModule,
     MatFormFieldModule,
     FormsModule,
-    AsyncPipe,
     MatIcon,
     MatCard,
   ],

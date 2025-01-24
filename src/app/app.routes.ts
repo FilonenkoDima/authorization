@@ -17,19 +17,24 @@ export const routes: Routes = [
     redirectTo: PATHS_ROUTES.USER_ASSESSMENTS,
     pathMatch: 'full',
   },
-  { path: PATHS_ROUTES.LOGIN, component: AuthorizationComponent },
+  {
+    path: PATHS_ROUTES.LOGIN,
+    component: AuthorizationComponent,
+    canActivate: [AuthGuardService]
+  },
   {
     path: PATHS_ROUTES.USERS,
     component: UsersViewComponent,
     canActivate: [AdminGuardService, AuthGuardService]
-  }, {
+  },
+  {
     path: PATHS_ROUTES.USER_ASSESSMENTS, component: UserAssessmentsViewComponent, canActivate: [AuthGuardService]
-  }, {
+  },
+  {
     path: `${PATHS_ROUTES.USER_ASSESSMENTS}/${PATHS_ROUTES.GRAPH}`,
     component: UserAssessmentGraphViewComponent,
     canActivate: [AuthGuardService]
   },
-
   { path: PATHS_ROUTES.INVALID_PATH, component: PageNotFoundComponent },
 ];
 

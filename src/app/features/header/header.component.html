@@ -19,6 +19,6 @@
         </ul>
       </div>
     }
-    <a class="btn btn-primary" [routerLink]="[PATHS_ROUTES.LOGIN]">{{ (isLoggedIn$ | async) ? 'Log out' : 'Log in' }}</a>
+    <a class="btn btn-primary" (click)="authorization()">{{ (isLoggedIn$ | async) ? 'Log out' : 'Log in' }}</a>
   </div>
 </nav>

@@ -16,7 +16,11 @@ import { PATHS_ROUTES } from '../../shared/enums/paths.enum';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  private authService:AuthorizationService = inject(AuthorizationService);
+  private authService: AuthorizationService = inject(AuthorizationService);
+
+  authorization() {
+    this.authService.authorization();
+  }
 
   isLoggedIn$: Observable<boolean> = this.authService.loggedIn$;
   isAdmin$: Observable<boolean> = this.authService.role$.pipe(
@@ -24,5 +28,6 @@ export class HeaderComponent {
       return role === RoleType.ADMIN
     })
   );
+
   protected readonly PATHS_ROUTES = PATHS_ROUTES;
 }

@@ -1,6 +1,4 @@
-@if (!(isLoggedIn$ | async)) {
-
-  <div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center">
   <mat-card appearance="outlined" class="p-4 w-50">
     <form [formGroup]="form" class="d-flex flex-column">
       <mat-form-field>
@@ -22,11 +20,4 @@
       </div>
     </form>
   </mat-card>
-  </div>
-} @else {
-  <h2>You are already logged in!</h2>
-
-  <div>
-    <button (click)="onLogout()" class="btn btn-primary w-25">Log out</button>
-  </div>
-}
+</div>
