@@ -1,42 +1,29 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import { UserAssessmentModel } from '../../shared/models/user-assessment.model';
-import { RoleType } from '../../shared/enums/role.enum';
-import { AuthorizationService } from '../../core/services/authorization.service';
-import { UsersAssessmentStore } from '../../core/store/data-store.factory';
+import { UserAssessmentModel } from '../../../shared/models/user-assessment.model';
+import { RoleType } from '../../../shared/enums/role.enum';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({
   selector: 'app-user-assessments',
-  imports: [
-    AsyncPipe,
-    MatCardModule,
-    RouterLink,
-    MatPaginator,
-    MatProgressSpinner
-  ],
+  imports: [AsyncPipe, MatCardModule, RouterLink, MatPaginator],
   templateUrl: './user-assessments.component.html',
+  styles: `.user-assessment-container {
+    height: calc(100vh - 6.5rem);
+  }`
 })
 export class UserAssessmentsComponent {
   private authService = inject(AuthorizationService);
 
-  isAdmin$: Observable<boolean> = this.authService.role$.pipe(map(role => role === RoleType.ADMIN));
+  userAssessments = input.required<UserAssessmentModel[]>();
 
-  totalAssessments: number = 0;
-  pageSize: number = 4;
-  pageSizeOptions = [4, 8, 12, 20];
-
-  userAssessmentsStore = new UsersAssessmentStore();
-
-  private userAssessmentsData = this.userAssessmentsStore.data;
-
-  private userAssessments$ = toObservable(this.userAssessmentsData);
+  private userAssessments$ = toObservable(this.userAssessments);
   private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private currentPage$: Observable<number> = this.currentPageSubject$.asObservable();
 
@@ -51,18 +38,21 @@ export class UserAssessmentsComponent {
       return assessments!.slice(startIndex, startIndex + this.pageSize);
     })
   );
+  isAdmin$: Observable<boolean> = this.authService.role$.pipe(map(role => role === RoleType.ADMIN));
+
+  totalAssessments: number = 0;
+  pageSize: number = 4;
+  pageSizeOptions = [4, 8, 12, 20];
+
+  constructor() {
+    effect(() => {
+      this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessments().length);
+    });
+  }
 
   onPageChange(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPageSubject$.next(event.pageIndex);
-  }
-
-  constructor() {
-    this.userAssessmentsStore.loadData();
-
-    effect(() => {
-      this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessmentsData().length);
-    });
   }
 
   private generatePageSizeOptions(length: number): number[] {

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 
 import { AuthorizationService } from "../services/authorization.service";
 import { RoleType } from '../../shared/enums/role.enum';
+import { PATHS_ROUTES } from '../../shared/enums/paths.enum';
 
 export const AdminGuardService: CanActivateFn = (): Observable<boolean> => {
   const authorizationService: AuthorizationService = inject(AuthorizationService);
@@ -14,7 +15,7 @@ export const AdminGuardService: CanActivateFn = (): Observable<boolean> => {
     map((role: RoleType) => role === RoleType.ADMIN),
     tap((isAdmin: boolean) => {
       if (!isAdmin) {
-        router.navigate(['page-not-found']);
+        router.navigate([PATHS_ROUTES.USER_ASSESSMENTS]);
       }
     })
   );

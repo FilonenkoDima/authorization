@@ -5,7 +5,7 @@
 </mat-form-field>
 <button class="btn btn-primary" (click)="downloadCSV()">Download as .csv</button>
 </div>
-<div class="mat-elevation-z8 table-container">
+<div class="mat-elevation-z8 table-container d-flex flex-column justify-content-between">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name" class="">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
@@ -45,6 +45,6 @@
     </tr>
   </table>
 
-  <mat-paginator class="sticky-bottom bg-info" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+    <mat-paginator class="sticky-bottom bg-info" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 </div>
 
