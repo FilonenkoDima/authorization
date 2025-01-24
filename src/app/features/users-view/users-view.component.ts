@@ -14,4 +14,8 @@ import { UsersStore } from '../../core/store/data-store.factory';
 })
 export class UsersViewComponent {
   usersStore = new UsersStore();
+
+  constructor() {
+    this.usersStore.loadData();
+  }
 }

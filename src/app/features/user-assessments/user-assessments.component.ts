@@ -36,15 +36,19 @@ export class UserAssessmentsComponent {
   private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private currentPage$: Observable<number> = this.currentPageSubject$.asObservable();
 
+  constructor() {
+    this.userAssessments.loadData();
+  }
+
   /** slice assessments for pagination */
   pagedAssessments$: Observable<UserAssessmentModel[]> = combineLatest([
     this.userAssessments$,
     this.currentPage$
   ]).pipe(
     map(([assessments, page]) => {
-      this.totalAssessments = assessments.length;
+      this.totalAssessments = assessments!.length;
       const startIndex: number = page * this.pageSize;
-      return assessments.slice(startIndex, startIndex + this.pageSize);
+      return assessments!.slice(startIndex, startIndex + this.pageSize);
     })
   );
 
