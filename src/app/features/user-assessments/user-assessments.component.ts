@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
@@ -30,15 +30,15 @@ export class UserAssessmentsComponent {
 
   totalAssessments: number = 0;
   pageSize: number = 4;
-  userAssessments = new UsersAssessmentStore();
+  pageSizeOptions = [4, 8, 12, 20];
 
-  private userAssessments$ = toObservable(this.userAssessments.data);
+  userAssessmentsStore = new UsersAssessmentStore();
+
+  private userAssessmentsData = this.userAssessmentsStore.data;
+
+  private userAssessments$ = toObservable(this.userAssessmentsData);
   private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private currentPage$: Observable<number> = this.currentPageSubject$.asObservable();
-
-  constructor() {
-    this.userAssessments.loadData();
-  }
 
   /** slice assessments for pagination */
   pagedAssessments$: Observable<UserAssessmentModel[]> = combineLatest([
@@ -55,5 +55,17 @@ export class UserAssessmentsComponent {
   onPageChange(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPageSubject$.next(event.pageIndex);
+  }
+
+  constructor() {
+    this.userAssessmentsStore.loadData();
+
+    effect(() => {
+      this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessmentsData().length);
+    });
+  }
+
+  private generatePageSizeOptions(length: number): number[] {
+    return this.pageSizeOptions.filter((option) => option <= length);
   }
 }

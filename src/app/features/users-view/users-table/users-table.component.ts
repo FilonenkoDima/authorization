@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, input, OnInit, ViewChild } from '@angular/core';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -20,6 +20,15 @@ import { UserDataModel } from '../../../shared/models/user-data.model';
     MatSortModule,
   ],
   templateUrl: './users-table.component.html',
+  styles: `
+    .table-container {
+    height: calc(100vh - 11.25rem);
+    overflow: auto;
+  }
+
+  table {
+    width: 100%;
+  }`
 })
 export class UsersTableComponent implements OnInit, AfterViewInit {
   users = input.required<UserDataModel[]>();
@@ -29,10 +38,18 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns!: string[];
   dataSource!: MatTableDataSource<UserDataModel>;
+  pageSizeOptions = [5, 10, 25, 50];
+
+  constructor() {
+    effect(() => {
+      this.pageSizeOptions = this.generatePageSizeOptions(this.users().length);
+    });
+  }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.users());
     this.displayedColumns = Object.keys(this.users()[0]) as (keyof UserDataModel)[];
+
   }
 
   ngAfterViewInit(): void {
@@ -48,5 +65,30 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  downloadCSV() {
+    const csvData = this.convertToCSV(this.users());
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = window.URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'users.csv');
+    link.click();
+  }
+
+  private generatePageSizeOptions(length: number): number[] {
+    return this.pageSizeOptions.filter((option) => option <= length);
+  }
+
+  private convertToCSV(data: UserDataModel[]): string {
+    const headers = Object.keys(data[0]);
+    const rows = data.map(row => {
+      return headers.map((fieldName: string) => {
+        const value = row[fieldName as keyof UserDataModel]; // Явно вказуємо, що поле є частиною UserDataModel
+        return JSON.stringify(value, (_, value) => value ?? ''); // Використовуємо значення, якщо воно є
+      }).join(',');
+    });
+    return [headers.join(','), ...rows].join('\n');
   }
 }
