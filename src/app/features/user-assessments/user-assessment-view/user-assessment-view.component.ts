@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { UserAssessmentGraphStore } from '../../../core/store/data-store.factory';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
+import { UserAssessmentGraphStore } from '../../../core/store/data-store.factory';
 import { UserAssessmentGraphComponent } from './user-assessment-graph/user-assessment-graph.component';
 
 @Component({
