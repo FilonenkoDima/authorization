@@ -3,7 +3,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserAssessmentGraphStore } from '../../../../core/store/data-store.factory';
+import { graphStore } from '../../../../core/store/data-store.factory';
 import { GraphComponent } from './graph/graph.component';
 
 @Component({
@@ -14,11 +14,9 @@ import { GraphComponent } from './graph/graph.component';
 export class GraphViewComponent {
   private route: ActivatedRoute = inject(ActivatedRoute);
 
-  graph = new UserAssessmentGraphStore();
-
   constructor() {
     this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((paramMap) => {
-      this.graph.loadData(paramMap.get('id')!.toString());
+      graphStore.loadData(paramMap.get('id')!.toString());
     });
   }
 }

@@ -6,15 +6,19 @@ import { UserAssessmentModel } from '../models/user-assessment.model';
 import { UserDataModel } from '../models/user-data.model';
 import { UserAssessmentGraphModel } from '../models/user-assessment-graph-data.model';
 
-export const UsersStore = createApiStore<UserDataModel[]>(
+const UsersStore = createApiStore<UserDataModel[]>(
   () => inject(ApiService).getUsers$()
 );
 
-export const UsersAssessmentStore = createApiStore<UserAssessmentModel[]>(
+const UsersAssessmentStore = createApiStore<UserAssessmentModel[]>(
   () => inject(ApiService).getUserAssessments$()
 );
 
-export const UserAssessmentGraphStore = createApiStore<UserAssessmentGraphModel, string>(
+const GraphStore = createApiStore<UserAssessmentGraphModel, string>(
   (id: string) => inject(ApiService).getUserAssessmentGraph$(id),
   { data: {}, type: '' } as UserAssessmentGraphModel
 );
+
+export const usersStore = new UsersStore();
+export const usersAssessmentStore = new UsersAssessmentStore();
+export const graphStore = new GraphStore();

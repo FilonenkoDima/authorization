@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import { UsersAssessmentStore } from '../../../core/store/data-store.factory';
+import { usersAssessmentStore } from '../../../core/store/data-store.factory';
 import { UserAssessmentsComponent } from './user-assessments/user-assessments.component';
 
 @Component({
@@ -14,9 +14,7 @@ import { UserAssessmentsComponent } from './user-assessments/user-assessments.co
 })
 export class UserAssessmentsViewComponent {
 
-  userAssessmentStore= new UsersAssessmentStore();
-
   constructor() {
-    this.userAssessmentStore.loadData();
+    usersAssessmentStore.loadData();
   }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UsersTableComponent } from './users-table/users-table.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import { UsersStore } from '../../../core/store/data-store.factory';
+import { usersStore } from '../../../core/store/data-store.factory';
 
 @Component({
   selector: 'app-users-view',
@@ -13,9 +13,8 @@ import { UsersStore } from '../../../core/store/data-store.factory';
   templateUrl: './users-view.component.html',
 })
 export class UsersViewComponent {
-  usersStore = new UsersStore();
 
   constructor() {
-    this.usersStore.loadData();
+    usersStore.loadData();
   }
 }
