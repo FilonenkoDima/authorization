@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatCard } from '@angular/material/card';
 
-import { AuthorizationService } from '../../core/services/authorization.service';
+import { AuthorizationService } from './services/authorization.service';
 
 @Component({
   selector: 'app-authorization',

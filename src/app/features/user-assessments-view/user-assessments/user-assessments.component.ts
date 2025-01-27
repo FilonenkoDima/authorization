@@ -8,7 +8,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 
 import { UserAssessmentModel } from '../../../core/models/user-assessment.model';
 import { RoleType } from '../../../core/enums/role.enum';
-import { AuthorizationService } from '../../../core/services/authorization.service';
+import { AuthorizationService } from '../../authorization/services/authorization.service';
 
 @Component({
   selector: 'app-user-assessments',

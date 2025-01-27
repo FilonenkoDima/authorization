@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from "@angular/router";
 import { map, tap } from "rxjs/operators";
 import { Observable } from "rxjs";
 
-import { AuthorizationService } from "../services/authorization.service";
+import { AuthorizationService } from "../../features/authorization/services/authorization.service";
 import { RoleType } from '../enums/role.enum';
 import { PATHS_ROUTES } from '../enums/paths.enum';
 
