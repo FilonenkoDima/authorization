@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { API_URL } from '../../environment/urls.environment';
 import { RoleType } from '../../core/enums/role.enum';
-import { LoginModel } from '../models/login.model';
+import { LoginRequestModel } from '../models/login-request.model';
 import { LoginResponseModel } from '../models/login-response.model';
 import { PATHS_ROUTES } from '../../core/enums/paths.enum';
 
@@ -32,7 +32,7 @@ export class AuthorizationService {
   }
 
   /** @return return true if success auth */
-  login$(userDetails: LoginModel): Observable<boolean> {
+  login$(userDetails: LoginRequestModel): Observable<boolean> {
     return this.http.post<LoginResponseModel>(`${API_URL}login`, userDetails)
       .pipe(
         map(response => {
