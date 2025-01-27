@@ -12,7 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' })),
     provideHttpClient(withInterceptors([jwtInterceptor])),
     provideAnimationsAsync(),
-    provideCharts(withDefaultRegisterables()),
     provideCharts(withDefaultRegisterables())
   ],
 };

@@ -28,7 +28,6 @@ export class AuthorizationService {
     if (this.loggedInSubject$.value) {
       this.logout();
     }
-    this.router.navigate([PATHS_ROUTES.LOGIN]);
   }
 
   /** @return return true if success auth */
@@ -55,5 +54,6 @@ export class AuthorizationService {
     this.loggedInSubject$.next(false);
     this.cookieService.set('ROLE', RoleType.UNAUTHORIZED);
     this.roleSubject$.next(RoleType.UNAUTHORIZED);
+    this.router.navigate([PATHS_ROUTES.LOGIN]);
   }
 }
