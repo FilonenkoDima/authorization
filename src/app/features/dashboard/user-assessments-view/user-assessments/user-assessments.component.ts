@@ -1,13 +1,10 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 
 import { UserAssessmentModel } from '../../../../core/models/user-assessment.model';
-import { RoleType } from '../../../../core/enums/role.enum';
 import { AuthorizationService } from '../../../../authorization/services/authorization.service';
 
 @Component({
@@ -19,43 +16,36 @@ import { AuthorizationService } from '../../../../authorization/services/authori
   }`
 })
 export class UserAssessmentsComponent {
-  private authService = inject(AuthorizationService);
+  private readonly authService: AuthorizationService = inject(AuthorizationService);
 
   userAssessments = input.required<UserAssessmentModel[]>();
 
-  private userAssessments$ = toObservable(this.userAssessments);
-  private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private currentPage$: Observable<number> = this.currentPageSubject$.asObservable();
+  private currentPage = signal<number>(0);
+  totalAssessments = signal<number>(this.userAssessments().length);
+  pageSize = signal<number>(4);
+  pageSizeOptions = signal<number[]>(this.generatePageSizeOptions(this.userAssessments().length));
 
-  /** slice assessments for pagination */
-  pagedAssessments$: Observable<UserAssessmentModel[]> = combineLatest([
-    this.userAssessments$,
-    this.currentPage$
-  ]).pipe(
-    map(([assessments, page]) => {
-      this.totalAssessments = assessments!.length;
-      const startIndex: number = page * this.pageSize;
-      return assessments!.slice(startIndex, startIndex + this.pageSize);
-    })
+  pagedAssessments = signal<UserAssessmentModel[]>(
+    this.userAssessments().slice(0, this.pageSize())
   );
-  isAdmin$: Observable<boolean> = this.authService.role$.pipe(map(role => role === RoleType.ADMIN));
-
-  totalAssessments: number = 0;
-  pageSize: number = 4;
-  pageSizeOptions = [4, 8, 12, 20];
-
-  constructor() {
-    effect(() => {
-      this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessments().length);
-    });
-  }
+  isAdmin$ = this.authService.isAdmin$;
 
   onPageChange(event: PageEvent) {
-    this.pageSize = event.pageSize;
-    this.currentPageSubject$.next(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.currentPage.set(event.pageIndex);
+    this.updatePagedAssessments();
+  }
+
+  private updatePagedAssessments() {
+    const assessments = this.userAssessments();
+    const page = this.currentPage();
+    const pageSize = this.pageSize();
+    this.totalAssessments.set(assessments.length);
+    const startIndex = page * pageSize;
+    this.pagedAssessments.set(assessments.slice(startIndex, startIndex + pageSize));
   }
 
   private generatePageSizeOptions(length: number): number[] {
-    return this.pageSizeOptions.filter((option) => option <= length);
+    return [4, 8, 12, 20].filter((option) => option <= length);
   }
 }
