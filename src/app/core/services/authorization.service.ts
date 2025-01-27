@@ -5,10 +5,10 @@ import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { API_URL } from '../../environment/urls.environment';
-import { RoleType } from '../../shared/enums/role.enum';
-import { LoginModel } from '../../shared/models/login.model';
-import { LoginResponseModel } from '../../shared/models/login-response.model';
-import { PATHS_ROUTES } from '../../shared/enums/paths.enum';
+import { RoleType } from '../enums/role.enum';
+import { LoginModel } from '../models/login.model';
+import { LoginResponseModel } from '../models/login-response.model';
+import { PATHS_ROUTES } from '../enums/paths.enum';
 
 @Injectable({
   providedIn: 'root'

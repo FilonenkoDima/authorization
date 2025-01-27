@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 
 import { API_URL } from '../../environment/urls.environment';
-import { UserAssessmentGraphModel } from '../../shared/models/user-assessment-graph-data.model';
-import { UserAssessmentModel } from '../../shared/models/user-assessment.model';
-import { UserDataModel } from '../../shared/models/user-data.model';
+import { UserAssessmentGraphModel } from '../models/user-assessment-graph-data.model';
+import { UserAssessmentModel } from '../models/user-assessment.model';
+import { UserDataModel } from '../models/user-data.model';
 
 @Injectable({
   providedIn: 'root'

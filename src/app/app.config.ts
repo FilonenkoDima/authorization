@@ -9,11 +9,10 @@ import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes,
-      withRouterConfig({
-        paramsInheritanceStrategy: 'always',
-      }),), provideHttpClient(withInterceptors([jwtInterceptor])),
-    provideAnimationsAsync(), provideCharts(withDefaultRegisterables()),
+    provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' })),
+    provideHttpClient(withInterceptors([jwtInterceptor])),
+    provideAnimationsAsync(),
+    provideCharts(withDefaultRegisterables()),
     provideCharts(withDefaultRegisterables())
   ],
 };

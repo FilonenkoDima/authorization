@@ -6,8 +6,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
-import { UserAssessmentModel } from '../../../shared/models/user-assessment.model';
-import { RoleType } from '../../../shared/enums/role.enum';
+import { UserAssessmentModel } from '../../../core/models/user-assessment.model';
+import { RoleType } from '../../../core/enums/role.enum';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({

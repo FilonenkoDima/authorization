@@ -3,9 +3,9 @@ import { AsyncPipe } from '@angular/common';
 import { map, Observable } from 'rxjs';
 
 import { AuthorizationService } from '../../core/services/authorization.service';
-import { RoleType } from '../../shared/enums/role.enum';
+import { RoleType } from '../../core/enums/role.enum';
 import { RouterLink } from '@angular/router';
-import { PATHS_ROUTES } from '../../shared/enums/paths.enum';
+import { PATHS_ROUTES } from '../../core/enums/paths.enum';
 
 @Component({
   selector: 'app-header',

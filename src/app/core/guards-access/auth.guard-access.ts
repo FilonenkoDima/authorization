@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
 import { Observable, map } from "rxjs";
 
 import { AuthorizationService } from "../services/authorization.service";
-import { PATHS_ROUTES } from '../../shared/enums/paths.enum';
+import { PATHS_ROUTES } from '../enums/paths.enum';
 
 export const AuthGuardService: CanActivateFn = (route: ActivatedRouteSnapshot): Observable<boolean> => {
   const authorizationService: AuthorizationService = inject(AuthorizationService);
