@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 
 import { AuthorizationService } from '../../authorization/services/authorization.service';
-import { RoleType } from '../../core/enums/role.enum';
 import { PATHS_ROUTES } from '../../core/enums/paths.enum';
 
 @Component({
@@ -21,11 +20,7 @@ export class HeaderComponent {
   private authService: AuthorizationService = inject(AuthorizationService);
 
   isLoggedIn$: Observable<boolean> = this.authService.loggedIn$;
-  isAdmin$: Observable<boolean> = this.authService.role$.pipe(
-    map((role: RoleType) => {
-      return role === RoleType.ADMIN
-    })
-  );
+  isAdmin$: Observable<boolean> = this.authService.isAdmin$;
 
   authorization() {
     if(this.isLoggedIn$) {
