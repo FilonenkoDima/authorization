@@ -1,1 +1,5 @@
-export enum RoleType {'UNAUTHORIZED'='UNAUTHORIZED', USER='USER', ADMIN='ADMIN' }
+export enum RoleType {
+  UNAUTHORIZED = 'UNAUTHORIZED',
+  USER = 'USER',
+  ADMIN = 'ADMIN'
+}
