@@ -10,7 +10,7 @@ import { UserDataModel } from '../models/user-data.model';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class ApiService {
   private http: HttpClient = inject(HttpClient);
 
   getUsers$() {
