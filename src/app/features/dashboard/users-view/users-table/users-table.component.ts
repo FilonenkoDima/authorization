@@ -5,7 +5,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
-import { UserDataModel } from '../../../core/models/user-data.model';
+import { UserDataModel } from '../../../../core/models/user-data.model';
 
 @Component({
   selector: 'app-users-table',

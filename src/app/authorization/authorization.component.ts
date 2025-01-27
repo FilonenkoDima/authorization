@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatCard } from '@angular/material/card';
 
@@ -11,20 +11,11 @@ import { AuthorizationService } from './services/authorization.service';
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
-  imports: [
-    MatInputModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatIcon,
-    MatCard,
-  ],
+  imports: [MatInputModule, ReactiveFormsModule, MatFormFieldModule, FormsModule, MatIcon, MatCard,],
 })
 export class AuthorizationComponent implements OnDestroy {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private authService: AuthorizationService = inject(AuthorizationService);
-
-  isLoggedIn$: Observable<boolean> = this.authService.loggedIn$;
 
   private loginSubscription$!: Subscription;
 
@@ -48,9 +39,5 @@ export class AuthorizationComponent implements OnDestroy {
           }
         });
     }
-  }
-
-  onLogout() {
-    this.authService.logout();
   }
 }

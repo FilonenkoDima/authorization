@@ -3,15 +3,12 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserAssessmentGraphStore } from '../../../core/store/data-store.factory';
+import { UserAssessmentGraphStore } from '../../../../core/store/data-store.factory';
 import { GraphComponent } from './graph/graph.component';
 
 @Component({
   selector: 'app-graph-view',
-  imports: [
-    MatProgressSpinner,
-    GraphComponent,
-  ],
+  imports: [MatProgressSpinner, GraphComponent],
   templateUrl: './graph-view.component.html',
 })
 export class GraphViewComponent {

@@ -9,11 +9,11 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" [routerLink]="[PATHS_ROUTES.USER_ASSESSMENTS]">User Assessments</a>
+            <a class="nav-link active" [routerLink]="[PATHS_ROUTES.DASHBOARD, PATHS_ROUTES.USER_ASSESSMENTS]">User Assessments</a>
           </li>
           @if ((isAdmin$ | async)) {
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="[PATHS_ROUTES.USERS]">Users</a>
+              <a class="nav-link" [routerLink]="[PATHS_ROUTES.DASHBOARD, PATHS_ROUTES.USERS]">Users</a>
             </li>
           }
         </ul>

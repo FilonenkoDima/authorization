@@ -4,4 +4,6 @@ export enum PATHS_ROUTES {
   USERS = 'users',
   USER_ASSESSMENTS = 'user-assessments',
   GRAPH = 'graph',
+  DASHBOARD = 'dashboard',
+  AUTH = 'auth',
 }

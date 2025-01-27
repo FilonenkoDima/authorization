@@ -4,11 +4,11 @@ import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { API_URL } from '../../../environment/urls.environment';
-import { RoleType } from '../../../core/enums/role.enum';
+import { API_URL } from '../../environment/urls.environment';
+import { RoleType } from '../../core/enums/role.enum';
 import { LoginModel } from '../models/login.model';
 import { LoginResponseModel } from '../models/login-response.model';
-import { PATHS_ROUTES } from '../../../core/enums/paths.enum';
+import { PATHS_ROUTES } from '../../core/enums/paths.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class AuthorizationService {
 
   loggedIn$: Observable<boolean> = this.loggedInSubject$.asObservable();
   role$: Observable<RoleType> = this.roleSubject$.asObservable();
+  isAdmin$: Observable<boolean> = this.role$.pipe(map((role) => role === RoleType.ADMIN));
 
   authorization() {
     if (this.loggedInSubject$.value) {
@@ -54,6 +55,6 @@ export class AuthorizationService {
     this.loggedInSubject$.next(false);
     this.cookieService.set('ROLE', RoleType.UNAUTHORIZED);
     this.roleSubject$.next(RoleType.UNAUTHORIZED);
-    this.router.navigate([PATHS_ROUTES.LOGIN]);
+    this.router.navigate(['/auth']);
   }
 }

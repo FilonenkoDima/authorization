@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
-import { UsersAssessmentStore } from '../../core/store/data-store.factory';
+import { UsersAssessmentStore } from '../../../core/store/data-store.factory';
 import { UserAssessmentsComponent } from './user-assessments/user-assessments.component';
 
 @Component({
