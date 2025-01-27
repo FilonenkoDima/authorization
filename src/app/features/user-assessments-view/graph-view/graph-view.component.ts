@@ -3,18 +3,18 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserAssessmentGraphStore } from '../../../../core/store/data-store.factory';
-import { UserAssessmentGraphComponent } from './user-assessment-graph/user-assessment-graph.component';
+import { UserAssessmentGraphStore } from '../../../core/store/data-store.factory';
+import { GraphComponent } from './graph/graph.component';
 
 @Component({
-  selector: 'app-user-assessment-graph-view',
+  selector: 'app-graph-view',
   imports: [
     MatProgressSpinner,
-    UserAssessmentGraphComponent,
+    GraphComponent,
   ],
-  templateUrl: './user-assessment-graph-view.component.html',
+  templateUrl: './graph-view.component.html',
 })
-export class UserAssessmentGraphViewComponent {
+export class GraphViewComponent {
   private route: ActivatedRoute = inject(ActivatedRoute);
 
   graph = new UserAssessmentGraphStore();

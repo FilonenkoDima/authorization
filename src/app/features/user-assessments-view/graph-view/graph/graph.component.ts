@@ -6,19 +6,19 @@ import { ChartData, ChartType } from 'chart.js';
 import {
   UserAssessmentGraphDataModel,
   UserAssessmentGraphModel,
-} from '../../../../../core/models/user-assessment-graph-data.model';
+} from '../../../../core/models/user-assessment-graph-data.model';
 
 const legendsColor = ['rgba(255, 87, 51, 0.75)', 'rgb(51, 255, 87, 0.75)', 'rgb(51, 87, 255, 0.75)', 'rgb(255, 51, 168, 0.75)'];
 
 @Component({
-  selector: 'app-user-assessment-graph',
+  selector: 'app-graph',
   imports: [
     RouterLink,
     BaseChartDirective,
   ],
-  templateUrl: './user-assessment-graph.component.html',
+  templateUrl: './graph.component.html',
 })
-export class UserAssessmentGraphComponent implements OnInit {
+export class GraphComponent implements OnInit {
   graph = input.required<UserAssessmentGraphModel>();
 
   graphData!: UserAssessmentGraphDataModel;

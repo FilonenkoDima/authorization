@@ -7,8 +7,8 @@ import { AuthGuardService } from './core/guards-access/auth.guard-access';
 import { PATHS_ROUTES } from './core/enums/paths.enum';
 import { UsersViewComponent } from './features/users-view/users-view.component';
 import {
-  UserAssessmentGraphViewComponent
-} from './features/user-assessments-view/user-assessments/user-assessment-view/user-assessment-graph-view.component';
+  GraphViewComponent
+} from './features/user-assessments-view/graph-view/graph-view.component';
 import { UserAssessmentsViewComponent } from './features/user-assessments-view/user-assessments-view.component';
 
 export const routes: Routes = [
@@ -34,7 +34,7 @@ export const routes: Routes = [
   },
   {
     path: `${PATHS_ROUTES.USER_ASSESSMENTS}/${PATHS_ROUTES.GRAPH}`,
-    component: UserAssessmentGraphViewComponent,
+    component: GraphViewComponent,
     canActivate: [AuthGuardService]
   },
   {
