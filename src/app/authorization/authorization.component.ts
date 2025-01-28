@@ -21,7 +21,7 @@ export class AuthorizationComponent implements OnDestroy {
 
   private loginSubscription$!: Subscription;
 
-  hide = true;
+  hide: boolean = true;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],

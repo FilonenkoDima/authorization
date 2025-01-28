@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, input, OnInit, Signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, input, InputSignal, OnInit, Signal, ViewChild } from '@angular/core';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -32,17 +32,16 @@ import { CapitalizeFirstPipe } from '../../../../core/pipes/capitalizeFirst.pipe
   }`
 })
 export class UsersTableComponent implements OnInit, AfterViewInit {
-  users = input.required<UserDataModel[]>();
+  users: InputSignal<UserDataModel[]> = input.required<UserDataModel[]>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   readonly displayedColumns: Signal<string[]> = computed(() => {
-    const users = this.users();
+    const users: UserDataModel[] = this.users();
     return users.length > 0 ? Object.keys(users[0]) : [];
   });
-
-  readonly pageSizeOptions = computed(() => {
+  readonly pageSizeOptions: Signal<number[]> = computed(() => {
     const defaultOptions = [5, 10, 25, 50];
     return defaultOptions.filter(option => option <= this.users().length);
   });

@@ -14,7 +14,7 @@ import { GraphComponent } from './graph/graph.component';
 export class GraphViewComponent {
   protected readonly graphStore = graphStore;
 
-  private route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   constructor() {
     this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((paramMap) => {

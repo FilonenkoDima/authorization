@@ -1,8 +1,9 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, InputSignal, Signal, signal, WritableSignal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
 
 import { UserAssessmentModel } from '../../../../core/models/user-assessment.model';
 import { AuthorizationService } from '../../../../authorization/services/authorization.service';
@@ -18,23 +19,23 @@ import { AuthorizationService } from '../../../../authorization/services/authori
 export class UserAssessmentsComponent {
   private readonly authService: AuthorizationService = inject(AuthorizationService);
 
-  userAssessments = input.required<UserAssessmentModel[]>();
+  userAssessments: InputSignal<UserAssessmentModel[]> = input.required<UserAssessmentModel[]>();
 
   /** Signal to track the current page */
-  private currentPageSignal = signal(0);
+  private currentPageSignal: WritableSignal<number> = signal(0);
 
   /** Slice assessments for pagination using a computed signal */
-  pagedAssessments = computed(() => {
+  pagedAssessments: Signal<UserAssessmentModel[]> = computed(() => {
     this.totalAssessments = this.userAssessments()?.length ?? 0;
-    const startIndex = this.currentPageSignal() * this.pageSize;
+    const startIndex: number = this.currentPageSignal() * this.pageSize;
     return this.userAssessments()?.slice(startIndex, startIndex + this.pageSize) ?? [];
   });
 
-  isAdmin$ = this.authService.isAdmin$;
+  isAdmin$: Observable<boolean> = this.authService.isAdmin$;
 
-  totalAssessments = 0;
-  pageSize = 4;
-  pageSizeOptions = [4, 8, 12, 20];
+  totalAssessments: number = 0;
+  pageSize: number = 4;
+  pageSizeOptions: number[] = [4, 8, 12, 20];
 
   constructor() {
     this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessments?.length ?? 0);

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 
 import { API_URL } from '../../environment/urls.environment';
-import { UserAssessmentGraphModel } from '../models/user-assessment-graph-data.model';
+import { GraphModel } from '../models/graph-data.model';
 import { UserAssessmentModel } from '../models/user-assessment.model';
 import { UserDataModel } from '../models/user-data.model';
 
@@ -11,7 +11,7 @@ import { UserDataModel } from '../models/user-data.model';
   providedIn: 'root'
 })
 export class ApiService {
-  private http: HttpClient = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
 
   getUsers$() {
     return this.http.get<UserDataModel[]>(`${API_URL}users`)
@@ -33,8 +33,8 @@ export class ApiService {
       );
   }
 
-  getUserAssessmentGraph$(userAssessmentId: string): Observable<UserAssessmentGraphModel> {
-    return this.http.get<UserAssessmentGraphModel>(`${API_URL}userassessments/graph?id=${userAssessmentId}`)
+  getUserAssessmentGraph$(userAssessmentId: string): Observable<GraphModel> {
+    return this.http.get<GraphModel>(`${API_URL}userassessments/graph?id=${userAssessmentId}`)
       .pipe(
         catchError(error => {
           console.log(error);

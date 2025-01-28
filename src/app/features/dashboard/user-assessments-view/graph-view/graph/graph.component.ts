@@ -4,9 +4,9 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartType } from 'chart.js';
 
 import {
-  UserAssessmentGraphDataModel,
-  UserAssessmentGraphModel,
-} from '../../../../../core/models/user-assessment-graph-data.model';
+  GraphDataModel,
+  GraphModel,
+} from '../../../../../core/models/graph-data.model';
 import { chartOptions, legendsColor } from '../../../../../core/constants/graph.constants';
 
 
@@ -21,9 +21,9 @@ import { chartOptions, legendsColor } from '../../../../../core/constants/graph.
 export class GraphComponent implements OnInit {
   protected readonly chartOptions = chartOptions;
 
-  graph = input.required<UserAssessmentGraphModel>();
+  graph = input.required<GraphModel>();
 
-  graphData!: UserAssessmentGraphDataModel;
+  graphData!: GraphDataModel;
   chartData!: ChartData;
   chartType!: ChartType;
 

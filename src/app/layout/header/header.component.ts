@@ -17,7 +17,7 @@ import { PATHS_ROUTES } from '../../core/enums/paths.enum';
 export class HeaderComponent {
   protected readonly PATHS_ROUTES = PATHS_ROUTES;
 
-  private authService: AuthorizationService = inject(AuthorizationService);
+  private readonly authService: AuthorizationService = inject(AuthorizationService);
 
   isLoggedIn$: Observable<boolean> = this.authService.loggedIn$;
   isAdmin$: Observable<boolean> = this.authService.isAdmin$;
