@@ -1,8 +1,9 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 import { UserAssessmentModel } from '../../../../core/models/user-assessment.model';
 import { AuthorizationService } from '../../../../authorization/services/authorization.service';
@@ -12,40 +13,40 @@ import { AuthorizationService } from '../../../../authorization/services/authori
   imports: [AsyncPipe, MatCardModule, RouterLink, MatPaginator],
   templateUrl: './user-assessments.component.html',
   styles: `.user-assessment-container {
-    height: calc(100vh - 6.5rem);
-  }`
+  height: calc(100vh - 6.5rem);
+}`
 })
 export class UserAssessmentsComponent {
   private readonly authService: AuthorizationService = inject(AuthorizationService);
 
   userAssessments = input.required<UserAssessmentModel[]>();
 
-  private currentPage = signal<number>(0);
-  totalAssessments = signal<number>(this.userAssessments().length);
-  pageSize = signal<number>(4);
-  pageSizeOptions = signal<number[]>(this.generatePageSizeOptions(this.userAssessments().length));
+  private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  pagedAssessments = signal<UserAssessmentModel[]>(
-    this.userAssessments().slice(0, this.pageSize())
+  /** slice assessments for pagination */
+  pagedAssessments$: Observable<UserAssessmentModel[]> = this.currentPageSubject$.pipe(
+    map((page) => {
+      this.totalAssessments = this.userAssessments()?.length ?? 0;
+      const startIndex = page * this.pageSize;
+      return this.userAssessments().slice(startIndex, startIndex + this.pageSize);
+    })
   );
-  isAdmin$ = this.authService.isAdmin$;
+  isAdmin$: Observable<boolean> = this.authService.isAdmin$;
 
-  onPageChange(event: PageEvent) {
-    this.pageSize.set(event.pageSize);
-    this.currentPage.set(event.pageIndex);
-    this.updatePagedAssessments();
+  totalAssessments: number = 0;
+  pageSize: number = 4;
+  pageSizeOptions: number[] = [4, 8, 12, 20];
+
+  constructor() {
+    this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessments?.length ?? 0);
   }
 
-  private updatePagedAssessments() {
-    const assessments = this.userAssessments();
-    const page = this.currentPage();
-    const pageSize = this.pageSize();
-    this.totalAssessments.set(assessments.length);
-    const startIndex = page * pageSize;
-    this.pagedAssessments.set(assessments.slice(startIndex, startIndex + pageSize));
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPageSubject$.next(event.pageIndex);
   }
 
   private generatePageSizeOptions(length: number): number[] {
-    return [4, 8, 12, 20].filter((option) => option <= length);
+    return this.pageSizeOptions.filter((option) => option <= length);
   }
 }

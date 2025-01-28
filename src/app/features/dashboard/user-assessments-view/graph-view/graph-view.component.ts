@@ -12,6 +12,8 @@ import { GraphComponent } from './graph/graph.component';
   templateUrl: './graph-view.component.html',
 })
 export class GraphViewComponent {
+  protected readonly graphStore = graphStore;
+
   private route: ActivatedRoute = inject(ActivatedRoute);
 
   constructor() {

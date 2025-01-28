@@ -13,6 +13,7 @@ import { UserAssessmentsComponent } from './user-assessments/user-assessments.co
   templateUrl: './user-assessments-view.component.html',
 })
 export class UserAssessmentsViewComponent {
+  protected readonly usersAssessmentStore = usersAssessmentStore;
 
   constructor() {
     usersAssessmentStore.loadData();

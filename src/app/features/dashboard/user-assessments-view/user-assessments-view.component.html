@@ -1,5 +1,5 @@
-@if (!userAssessmentStore.isLoading()) {
-  <app-user-assessments [userAssessments]="userAssessmentStore.data()"></app-user-assessments>
+@if (!usersAssessmentStore.isLoading()) {
+  <app-user-assessments [userAssessments]="usersAssessmentStore.data()!"></app-user-assessments>
 } @else {
   <div class="d-flex justify-content-center align-items-center vh-100">
     <mat-spinner></mat-spinner>

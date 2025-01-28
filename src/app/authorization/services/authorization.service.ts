@@ -25,12 +25,6 @@ export class AuthorizationService {
   role$: Observable<RoleType> = this.roleSubject$.asObservable();
   isAdmin$: Observable<boolean> = this.role$.pipe(map((role) => role === RoleType.ADMIN));
 
-  authorization() {
-    if (this.loggedInSubject$.value) {
-      this.logout();
-    }
-  }
-
   /** @return return true if success auth */
   login$(userDetails: LoginRequestModel): Observable<boolean> {
     return this.http.post<LoginResponseModel>(`${API_URL}login`, userDetails)

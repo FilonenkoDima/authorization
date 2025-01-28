@@ -1,5 +1,5 @@
-@if (!graph.isLoading()) {
-  <app-graph [graph]="graph.data()"></app-graph>
+@if (!graphStore.isLoading()) {
+  <app-graph [graph]="graphStore.data()"></app-graph>
 } @else {
   <div class="d-flex justify-content-center align-items-center vh-100">
     <mat-spinner></mat-spinner>
