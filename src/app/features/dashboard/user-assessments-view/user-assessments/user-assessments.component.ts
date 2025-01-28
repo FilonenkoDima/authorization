@@ -1,9 +1,8 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, map, Observable } from 'rxjs';
 
 import { UserAssessmentModel } from '../../../../core/models/user-assessment.model';
 import { AuthorizationService } from '../../../../authorization/services/authorization.service';
@@ -21,29 +20,30 @@ export class UserAssessmentsComponent {
 
   userAssessments = input.required<UserAssessmentModel[]>();
 
-  private currentPageSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  /** Signal to track the current page */
+  private currentPageSignal = signal(0);
 
-  /** slice assessments for pagination */
-  pagedAssessments$: Observable<UserAssessmentModel[]> = this.currentPageSubject$.pipe(
-    map((page) => {
-      this.totalAssessments = this.userAssessments()?.length ?? 0;
-      const startIndex = page * this.pageSize;
-      return this.userAssessments().slice(startIndex, startIndex + this.pageSize);
-    })
-  );
-  isAdmin$: Observable<boolean> = this.authService.isAdmin$;
+  /** Slice assessments for pagination using a computed signal */
+  pagedAssessments = computed(() => {
+    this.totalAssessments = this.userAssessments()?.length ?? 0;
+    const startIndex = this.currentPageSignal() * this.pageSize;
+    return this.userAssessments()?.slice(startIndex, startIndex + this.pageSize) ?? [];
+  });
 
-  totalAssessments: number = 0;
-  pageSize: number = 4;
-  pageSizeOptions: number[] = [4, 8, 12, 20];
+  isAdmin$ = this.authService.isAdmin$;
+
+  totalAssessments = 0;
+  pageSize = 4;
+  pageSizeOptions = [4, 8, 12, 20];
 
   constructor() {
     this.pageSizeOptions = this.generatePageSizeOptions(this.userAssessments?.length ?? 0);
   }
 
+  /** Update the current page signal on page change */
   onPageChange(event: PageEvent) {
     this.pageSize = event.pageSize;
-    this.currentPageSubject$.next(event.pageIndex);
+    this.currentPageSignal.set(event.pageIndex);
   }
 
   private generatePageSizeOptions(length: number): number[] {
