@@ -22,7 +22,7 @@ import { UserDataModel } from '../../../../core/models/user-data.model';
   templateUrl: './users-table.component.html',
   styles: `
     .table-container {
-    height: calc(100vh - 11.25rem);
+    height: calc(100vh - var(--nav-height) - var(--input-field-height));
     overflow: auto;
   }
 

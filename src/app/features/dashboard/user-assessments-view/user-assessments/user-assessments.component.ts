@@ -12,7 +12,7 @@ import { AuthorizationService } from '../../../../authorization/services/authori
   imports: [AsyncPipe, MatCardModule, RouterLink, MatPaginator],
   templateUrl: './user-assessments.component.html',
   styles: `.user-assessment-container {
-  height: calc(100vh - 6.5rem);
+  height: calc(100vh - var(--nav-height));
 }`
 })
 export class UserAssessmentsComponent {
