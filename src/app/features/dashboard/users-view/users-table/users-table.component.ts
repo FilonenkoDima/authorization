@@ -1,23 +1,24 @@
-import { AfterViewInit, Component, effect, input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, input, OnInit, Signal, ViewChild } from '@angular/core';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 import { UserDataModel } from '../../../../core/models/user-data.model';
+import { CapitalizeFirstPipe } from '../../../../core/pipes/capitalizeFirst.pipe';
 
 @Component({
   selector: 'app-users-table',
   imports: [
     MatFormField,
-    MatInput,
     MatSort,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    CapitalizeFirstPipe,
   ],
   templateUrl: './users-table.component.html',
   styles: `
@@ -36,20 +37,20 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns!: string[];
-  dataSource!: MatTableDataSource<UserDataModel>;
-  pageSizeOptions = [5, 10, 25, 50];
+  readonly displayedColumns: Signal<string[]> = computed(() => {
+    const users = this.users();
+    return users.length > 0 ? Object.keys(users[0]) : [];
+  });
 
-  constructor() {
-    effect(() => {
-      this.pageSizeOptions = this.generatePageSizeOptions(this.users().length);
-    });
-  }
+  readonly pageSizeOptions = computed(() => {
+    const defaultOptions = [5, 10, 25, 50];
+    return defaultOptions.filter(option => option <= this.users().length);
+  });
+
+  dataSource!: MatTableDataSource<UserDataModel>;
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.users());
-    this.displayedColumns = Object.keys(this.users()[0]) as (keyof UserDataModel)[];
-
   }
 
   ngAfterViewInit(): void {
@@ -75,10 +76,6 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     link.setAttribute('href', url);
     link.setAttribute('download', 'users.csv');
     link.click();
-  }
-
-  private generatePageSizeOptions(length: number): number[] {
-    return this.pageSizeOptions.filter((option) => option <= length);
   }
 
   private convertToCSV(data: UserDataModel[]): string {
