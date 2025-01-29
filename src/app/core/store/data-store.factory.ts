@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { Injector } from '@angular/core';
 
 import { createApiStore } from './data.store';
 import { ApiService } from '../services/api.service';
@@ -6,19 +6,20 @@ import { UserAssessmentModel } from '../models/user-assessment.model';
 import { UserDataModel } from '../models/user-data.model';
 import { GraphModel } from '../models/graph-data.model';
 
-const UsersStore = createApiStore<UserDataModel[]>(
-  () => inject(ApiService).getUsers$()
+export const UsersStore = createApiStore(
+  (params: void, injector: Injector) =>
+    injector.get(ApiService).getUsers$(),
+  [] as UserDataModel[]
 );
 
-const UsersAssessmentStore = createApiStore<UserAssessmentModel[]>(
-  () => inject(ApiService).getUserAssessments$()
+export const UsersAssessmentStore = createApiStore(
+  (params: void, injector: Injector) =>
+    injector.get(ApiService).getUserAssessments$(),
+  [] as UserAssessmentModel[]
 );
 
-const GraphStore = createApiStore<GraphModel, string>(
-  (id: string) => inject(ApiService).getUserAssessmentGraph$(id),
-  { data: {}, type: '' } as GraphModel
+export const GraphStore = createApiStore(
+  (params: string, injector: Injector) =>
+    injector.get(ApiService).getGraph$(params),
+  {} as GraphModel
 );
-
-export const usersStore = new UsersStore();
-export const usersAssessmentStore = new UsersAssessmentStore();
-export const graphStore = new GraphStore();

@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { PATHS_ROUTES } from '../core/enums/paths.enum';
-import { AuthorizationComponent } from './authorization.component';
 
 export const ROUTES: Routes = [
   {
@@ -11,6 +10,6 @@ export const ROUTES: Routes = [
   },
   {
     path: PATHS_ROUTES.LOGIN,
-    component: AuthorizationComponent,
+    loadComponent: () => import('./authorization.component'),
   }
 ]

@@ -33,7 +33,7 @@ export class ApiService {
       );
   }
 
-  getUserAssessmentGraph$(userAssessmentId: string): Observable<GraphModel> {
+  getGraph$(userAssessmentId: string): Observable<GraphModel> {
     return this.http.get<GraphModel>(`${API_URL}userassessments/graph?id=${userAssessmentId}`)
       .pipe(
         catchError(error => {

@@ -1,8 +1,7 @@
-@if (usersStore.data().length > 0) {
-  <app-users-table [users]="usersStore.data()"></app-users-table>
+@if (!store.isLoading()) {
+  <app-graph [$graph]="store.data()"></app-graph>
 } @else {
   <div class="d-flex justify-content-center align-items-center vh-100">
     <mat-spinner></mat-spinner>
   </div>
 }
-

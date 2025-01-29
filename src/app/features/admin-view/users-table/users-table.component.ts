@@ -5,8 +5,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
-import { UserDataModel } from '../../../../core/models/user-data.model';
-import { CapitalizeFirstPipe } from '../../../../core/pipes/capitalizeFirst.pipe';
+import { UserDataModel } from '../../../core/models/user-data.model';
+import { CapitalizeFirstPipe } from '../../../core/pipes/capitalizeFirst.pipe';
 
 @Component({
   selector: 'app-users-table',
@@ -32,24 +32,24 @@ import { CapitalizeFirstPipe } from '../../../../core/pipes/capitalizeFirst.pipe
   }`
 })
 export class UsersTableComponent implements OnInit, AfterViewInit {
-  users: InputSignal<UserDataModel[]> = input.required<UserDataModel[]>();
+  $users: InputSignal<UserDataModel[]> = input.required<UserDataModel[]>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  readonly displayedColumns: Signal<string[]> = computed(() => {
-    const users: UserDataModel[] = this.users();
+  readonly $displayedColumns: Signal<string[]> = computed(() => {
+    const users: UserDataModel[] = this.$users();
     return users.length > 0 ? Object.keys(users[0]) : [];
   });
-  readonly pageSizeOptions: Signal<number[]> = computed(() => {
+  readonly $pageSizeOptions: Signal<number[]> = computed(() => {
     const defaultOptions = [5, 10, 25, 50];
-    return defaultOptions.filter(option => option <= this.users().length);
+    return defaultOptions.filter(option => option <= this.$users().length);
   });
 
   dataSource!: MatTableDataSource<UserDataModel>;
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.users());
+    this.dataSource = new MatTableDataSource(this.$users());
   }
 
   ngAfterViewInit(): void {
@@ -68,7 +68,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   }
 
   downloadCSV() {
-    const csvData = this.convertToCSV(this.users());
+    const csvData = this.convertToCSV(this.$users());
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = window.URL.createObjectURL(blob);

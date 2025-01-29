@@ -14,8 +14,8 @@ import { PATHS_ROUTES } from '../../core/enums/paths.enum';
   providedIn: 'root'
 })
 export class AuthorizationService {
-  private http: HttpClient = inject(HttpClient);
-  private cookieService: CookieService = inject(CookieService);
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly cookieService: CookieService = inject(CookieService);
   private readonly router = inject(Router);
 
   private loggedInSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.cookieService.check('JWT_Token'));

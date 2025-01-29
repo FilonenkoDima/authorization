@@ -1,6 +1,6 @@
 <div class="d-flex flex-column justify-content-between user-assessment-container">
   <div class="row g-3">
-    @for (userAssessment of pagedAssessments(); track userAssessment.id) {
+    @for (userAssessment of $pagedAssessments(); track userAssessment.id) {
       <div class="col-md-6 px-2">
         <a class="btn w-100 text-start border-0" [routerLink]="['./graph']" [queryParams]="{ id: userAssessment.id }">
           <mat-card class="example-card" appearance="outlined">

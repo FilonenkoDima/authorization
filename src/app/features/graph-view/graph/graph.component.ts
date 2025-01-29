@@ -6,8 +6,8 @@ import { ChartData, ChartType } from 'chart.js';
 import {
   GraphDataModel,
   GraphModel,
-} from '../../../../../core/models/graph-data.model';
-import { chartOptions, legendsColor } from '../../../../../core/constants/graph.constants';
+} from '../../../core/models/graph-data.model';
+import { chartOptions, legendsColor } from '../../../core/constants/graph.constants';
 
 
 @Component({
@@ -21,15 +21,15 @@ import { chartOptions, legendsColor } from '../../../../../core/constants/graph.
 export class GraphComponent implements OnInit {
   protected readonly chartOptions = chartOptions;
 
-  graph = input.required<GraphModel>();
+  $graph = input.required<GraphModel>();
 
   graphData!: GraphDataModel;
   chartData!: ChartData;
   chartType!: ChartType;
 
   ngOnInit() {
-    this.graphData = this.graph().data;
-    this.chartType = this.graph().type as ChartType;
+    this.graphData = this.$graph().data;
+    this.chartType = this.$graph().type as ChartType;
 
       this.initChart();
   }
