@@ -1,0 +1,38 @@
+<div class="d-flex flex-column justify-content-between user-assessment-container">
+  <div class="row g-3">
+    @for (userAssessment of $pagedAssessments(); track userAssessment.id) {
+      <div class="col-md-6 px-2">
+        <a class="btn w-100 text-start border-0" [routerLink]="['./graph']" [queryParams]="{ id: userAssessment.id }">
+          <mat-card class="example-card" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ userAssessment.name }}</mat-card-title>
+                <mat-card-subtitle>Large</mat-card-subtitle>
+                <img mat-card-lg-image [src]="userAssessment.image_url" [alt]="userAssessment.name">
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              <p>User Resolved - {{ userAssessment.users_resolved }}</p>
+              <p [class]="{
+            'text-success': userAssessment.active,
+            'text-danger': !userAssessment.active,
+            }">User is {{ userAssessment.active ? 'active' : 'inactive' }}</p>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+    }
+  </div>
+
+  @if (isAdmin$ | async) {
+    <mat-paginator
+      class="sticky-bottom bg-info"
+      [length]="totalAssessments"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      aria-label="Select page of users"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  }
+</div>
+

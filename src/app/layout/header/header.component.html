@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="">Authorization</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    @if ((isLoggedIn$ | async)) {
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="[PATHS_ROUTES.DASHBOARD, PATHS_ROUTES.USER_ASSESSMENTS]">User Assessments</a>
+          </li>
+          @if ((isAdmin$ | async)) {
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="[PATHS_ROUTES.DASHBOARD, PATHS_ROUTES.USERS]">Users</a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+    <a class="btn btn-primary" (click)="authorization()">{{ (isLoggedIn$ | async) ? 'Log out' : 'Log in' }}</a>
+  </div>
+</nav>

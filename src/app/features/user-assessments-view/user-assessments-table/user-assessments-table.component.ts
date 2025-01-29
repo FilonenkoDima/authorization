@@ -1,0 +1,53 @@
+import { Component, computed, inject, input, InputSignal, Signal, signal, WritableSignal } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
+
+import { UserAssessmentModel } from '../../../core/models/user-assessment.model';
+import { AuthorizationService } from '../../../authorization/services/authorization.service';
+
+@Component({
+  selector: 'app-user-assessments-table',
+  imports: [AsyncPipe, MatCardModule, RouterLink, MatPaginator],
+  templateUrl: './user-assessments-table.component.html',
+  styles: `.user-assessment-container {
+  height: calc(100vh - var(--nav-height));
+}`
+})
+export class UserAssessmentsTableComponent {
+  private readonly authService: AuthorizationService = inject(AuthorizationService);
+
+  $userAssessments: InputSignal<UserAssessmentModel[]> = input.required<UserAssessmentModel[]>();
+
+  /** Signal to track the current page */
+  private $currentPageSignal: WritableSignal<number> = signal(0);
+
+  /** Slice assessments for pagination using a computed signal */
+  $pagedAssessments: Signal<UserAssessmentModel[]> = computed(() => {
+    this.totalAssessments = this.$userAssessments()?.length ?? 0;
+    const startIndex: number = this.$currentPageSignal() * this.pageSize;
+    return this.$userAssessments()?.slice(startIndex, startIndex + this.pageSize) ?? [];
+  });
+
+  isAdmin$: Observable<boolean> = this.authService.isAdmin$;
+
+  totalAssessments: number = 0;
+  pageSize: number = 4;
+  pageSizeOptions: number[] = [4, 8, 12, 20];
+
+  constructor() {
+    this.pageSizeOptions = this.generatePageSizeOptions(this.$userAssessments?.length ?? 0);
+  }
+
+  /** Update the current page signal on page change */
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.$currentPageSignal.set(event.pageIndex);
+  }
+
+  private generatePageSizeOptions(length: number): number[] {
+    return this.pageSizeOptions.filter((option) => option <= length);
+  }
+}

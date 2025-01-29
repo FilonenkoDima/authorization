@@ -1,0 +1,7 @@
+@if (!store.isLoading()) {
+  <app-user-assessments-table [$userAssessments]="store.data()!"></app-user-assessments-table>
+} @else {
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <mat-spinner></mat-spinner>
+  </div>
+}
